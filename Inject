@@ -1,0 +1,212 @@
+--Ghxst Loader
+-- Instances:
+
+local Injector = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local LaunchGhxst = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+local clickLeft = Instance.new("ImageLabel")
+local Main = Instance.new("Folder")
+local Logo = Instance.new("ImageLabel")
+local UICorner_2 = Instance.new("UICorner")
+local Close = Instance.new("ImageButton")
+local UIToolsGradient = Instance.new("UIGradient")
+
+--Properties:
+
+Injector.Name = "Injector"
+Injector.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Injector.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = Injector
+MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.401075333, 0, 0.327947557, 0)
+MainFrame.Size = UDim2.new(0.180298448, 0, 0.342221886, 0)
+
+LaunchGhxst.Name = "Launch Ghxst"
+LaunchGhxst.Parent = MainFrame
+LaunchGhxst.BackgroundColor3 = Color3.fromRGB(138, 91, 60)
+LaunchGhxst.BorderColor3 = Color3.fromRGB(0, 0, 0)
+LaunchGhxst.BorderSizePixel = 0
+LaunchGhxst.Position = UDim2.new(0.131144971, 0, 0.444122404, 0)
+LaunchGhxst.Size = UDim2.new(0, 200, 0, 55)
+LaunchGhxst.Font = Enum.Font.Unknown
+LaunchGhxst.Text = "Launch Client"
+LaunchGhxst.TextColor3 = Color3.fromRGB(0, 0, 0)
+LaunchGhxst.TextScaled = true
+LaunchGhxst.TextSize = 14.000
+LaunchGhxst.TextWrapped = true
+LaunchGhxst.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/ArceusXEditsOfficial/GHXST-V5.1/main/Main/Loader"))()
+end)
+
+UICorner.Parent = LaunchGhxst
+
+clickLeft.Name = "clickLeft"
+clickLeft.Parent = LaunchGhxst
+clickLeft.BackgroundTransparency = 1.000
+clickLeft.Position = UDim2.new(0.963072538, 0, 0, 0)
+clickLeft.Size = UDim2.new(0, 55, 0, 55)
+clickLeft.Image = "rbxassetid://14976970435"
+clickLeft.ImageRectOffset = Vector2.new(512, 908)
+clickLeft.ImageRectSize = Vector2.new(108, 108)
+
+Main.Name = "Main"
+Main.Parent = MainFrame
+
+Logo.Name = "Logo"
+Logo.Parent = Main
+Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Logo.BackgroundTransparency = 1.000
+Logo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Logo.BorderSizePixel = 0
+Logo.Position = UDim2.new(0.311956793, 0, -0.00939391553, 0)
+Logo.Size = UDim2.new(0, 88, 0, 88)
+Logo.Image = "rbxassetid://18270815488"
+
+UICorner_2.CornerRadius = UDim.new(0, 15)
+UICorner_2.Parent = MainFrame
+
+Close.Name = "Close"
+Close.Parent = MainFrame
+Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Close.BackgroundTransparency = 1.000
+Close.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Close.BorderSizePixel = 0
+Close.Position = UDim2.new(0, 0, -0.00347659062, 0)
+Close.Size = UDim2.new(0, 55, 0, 55)
+Close.Image = "rbxassetid://16884178261"
+Close.ImageRectOffset = Vector2.new(0, 266)
+Close.ImageRectSize = Vector2.new(36, 36)
+
+UIToolsGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(29, 29, 29)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(47, 47, 47))}
+UIToolsGradient.Name = "UIToolsGradient"
+UIToolsGradient.Parent = MainFrame
+
+-- Scripts:
+
+local function ZHQKE_fake_script() -- LaunchGhxst.LocalScript 
+	local script = Instance.new('LocalScript', LaunchGhxst)
+
+	local TextButton = script.Parent
+	local TweenService = game:GetService("TweenService")
+	
+	local colors = {
+		Color3.fromRGB(0, 0, 255),      -- Blue
+		Color3.fromRGB(220, 20, 60),    -- Crimson
+		Color3.fromRGB(0, 100, 0)       -- Dark Green
+	}
+	
+	local currentColorIndex = 1
+	local tweenInfo = TweenInfo.new(
+		5,                              
+		Enum.EasingStyle.Linear,        
+		Enum.EasingDirection.InOut,     
+		-1,                             
+		true
+	)
+	
+	local function tweenColor()
+		local nextColorIndex = (currentColorIndex % #colors) + 1
+		local tween = TweenService:Create(TextButton, tweenInfo, {BackgroundColor3 = colors[nextColorIndex]})
+		tween:Play()
+		tween.Completed:Connect(function()
+			currentColorIndex = nextColorIndex
+			tweenColor()
+		end)
+	end
+	
+	tweenColor()
+	
+	
+end
+coroutine.wrap(ZHQKE_fake_script)()
+local function FRYKSTX_fake_script() -- MainFrame.Drag 
+	local script = Instance.new('LocalScript', MainFrame)
+
+	local TweenService = game:GetService("TweenService")
+	local UserInputService = game:GetService("UserInputService")
+	
+	local frame = script.Parent
+	
+	local dragging = false
+	local dragInput, mousePos, framePos
+	local lastMousePos, lastGoalPos
+	local dragSpeed = 0.10  -- smoothness
+	
+	local function lerp(a, b, m)
+		return a + (b - a) * m
+	end
+	
+	local function update(input)
+		local delta = input.Position - mousePos
+		local newPos = UDim2.new(
+			framePos.X.Scale,
+			framePos.X.Offset + delta.X,
+			framePos.Y.Scale,
+			framePos.Y.Offset + delta.Y
+		)
+		lastGoalPos = newPos
+	end
+	
+	frame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			mousePos = input.Position
+			framePos = frame.Position
+			lastMousePos = mousePos
+			lastGoalPos = frame.Position
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	frame.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if dragging and input == dragInput then
+			update(input)
+		end
+	end)
+	
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if dragging then
+			frame.Position = UDim2.new(
+				lerp(frame.Position.X.Scale, lastGoalPos.X.Scale, dragSpeed),
+				lerp(frame.Position.X.Offset, lastGoalPos.X.Offset, dragSpeed),
+				lerp(frame.Position.Y.Scale, lastGoalPos.Y.Scale, dragSpeed),
+				lerp(frame.Position.Y.Offset, lastGoalPos.Y.Offset, dragSpeed)
+			)
+		end
+	end)
+	
+end
+coroutine.wrap(FRYKSTX_fake_script)()
+local function VCQWQ_fake_script() -- Close.LocalScript 
+	local script = Instance.new('LocalScript', Close)
+
+	local imageButton = script.Parent 
+	local mainFrame = imageButton.Parent 
+	local screenGui = mainFrame.Parent 
+	
+	imageButton.MouseButton1Click:Connect(function()
+		if screenGui then
+			screenGui:Destroy()
+		end
+	end)
+	
+	
+	
+end
+coroutine.wrap(VCQWQ_fake_script)()
